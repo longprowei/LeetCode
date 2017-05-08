@@ -1,1 +1,1 @@
-Answer of Leetcode problems
+Answer of Leetcode Algorithms problems
