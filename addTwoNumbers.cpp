@@ -1,14 +1,14 @@
 /*************************************************************************************
  * Source : https://oj.leetcode.com/problems/add-two-numbers/
  * Author : Chenglong Wei
- * Date   : 2014-11-05
+ * Date   : 2018-12-18
  * 
  * You are given two linked lists representing two non-negative numbers. 
  * The digits are stored in reverse order and each of their nodes contain a single digit.
  * Add the two numbers and return it as a linked list.
  *
  * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
- * Output: 7 -> 0 -> 8
+ * Output: 7 -> 0 -> 8 
  *
  ************************************************************************************/
 #include <iostream>
@@ -25,36 +25,29 @@ struct ListNode {
 
 class Solution {
 public:
-    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-        int sum = 0, carrybit = 0;
-        ListNode *p = NULL, *sumList = NULL;
-        while (l1 != NULL || l2 != NULL || carrybit == 1) {
-            if (l1 != NULL && l2 != NULL) {
-                sum = l1->val + l2->val + carrybit;
-                l1 = l1->next;
-                l2 = l2->next;
-            } else if (l1 != NULL) {
-                sum = l1->val + carrybit;
-                l1 = l1->next;
-            } else if (l2 != NULL) {
-                sum = l2->val + carrybit;
-                l2 = l2->next;
-            } else if (carrybit == 1) {
-                p->next = new ListNode(carrybit);
-                break;
-            }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode *dummyHead = new ListNode(0);;
+        ListNode *p = l1, *q = l2, *cur = dummyHead;
+        int carry = 0;
 
-            ListNode *node = new ListNode(sum % 10);
-            carrybit = sum / 10;
-            if (NULL == sumList) {
-                sumList = p = node;
-            } else {
-                p->next = node;
-                p = node;
-            }
+        while (p != NULL || q != NULL) {
+            int x = (p != NULL) ? p->val : 0;
+            int y = (q != NULL) ? q->val : 0;
+            int sum = x + y + carry;
+            cur->next = new ListNode(0);
+            cur = cur->next;
+            cur->val = sum % 10;
+            carry = sum / 10;
+
+            if (p != NULL) p = p->next;
+            if (q != NULL) q = q->next;
         }
 
-        return sumList;
+        if (carry != 0) {
+            cur->next = new ListNode(1);
+        }
+
+        return dummyHead->next;
     }
 };
 
