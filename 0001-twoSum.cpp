@@ -24,15 +24,15 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int> &numbers, int target) {
+    vector<int> twoSum(vector<int> &nums, int target) {
         map<int, int> m;
         vector<int> indices;
-        for (size_t i = 0; i < numbers.size(); i++) {
-            if (m.find(numbers[i]) == m.end()) {
-                m[target - numbers[i]] = i;
+        for (size_t i = 0; i < nums.size(); i++) {
+            if (m.find(nums[i]) == m.end()) {
+                m[target - nums[i]] = i;
             } else {
-                indices.push_back(m[numbers[i]] + 1);
-                indices.push_back(i + 1);
+                indices.push_back(m[nums[i]]);
+                indices.push_back(i);
                 break;
             }
         }
