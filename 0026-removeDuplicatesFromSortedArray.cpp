@@ -1,3 +1,8 @@
+/*************************************************************************************
+ * Source : https://leetcode.com/problems/reverse-integer/
+ * Author : Chenglong Wei
+ * Date   : 2019-05-05
+ ************************************************************************************/
 #include <iostream>
 #include <vector>
 #include <cassert>
