@@ -6,29 +6,33 @@
 #include <iostream>
 #include <cassert>
 #include <stack>
+#include <map>
 
 using namespace std;
 
 class Solution {
 public:
     bool isValid(string s) {
+        map<char, char> m;
+        m[')'] = '(';
+        m[']'] = '[';
+        m['}'] = '{';
+
         size_t len = s.length();
-        if (len == 0) return true;
-        
         stack<char> charStack;
         for (size_t i = 0; i < len; i++) {
-            if (charStack.size() == 0) {
-                charStack.push(s[i]);
-            } else if ((s[i] == '}' && charStack.top() == '{') ||
-                       (s[i] == ')' && charStack.top() == '(') ||
-                       (s[i] == ']' && charStack.top() == '[')) {
+            char c = s[i];
+            if (m.find(c) != m.end()) {
+                if (charStack.empty()) return false;
+
+                if (m.at(c) != charStack.top()) return false;
                 charStack.pop();
             } else {
-                charStack.push(s[i]);
+                charStack.push(c);
             }
         }
         
-        return charStack.size() == 0 ? true : false;
+        return charStack.empty();
     }
 };
 
