@@ -1,57 +1,33 @@
 #include <iostream>
 #include <cstring>
+#include <vector>
 
 using namespace std;
 
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if (numRows == 1 || s.length() < numRows) {
+        if (numRows == 1 || s.size() < numRows) {
             return s;
         }
 
-        size_t length = s.length();
-        int columns = (length / numRows + 1) * 2;
+        vector<string> rows(numRows);
+        
+        bool downDirection = false;
+        int currRow = 0;
+        for(char c : s) {
+            rows[currRow] += c;
 
-        char zigArray[numRows][columns];
-        memset(zigArray, 0, sizeof(char) * numRows * columns);
-        int currRow = 0, currCol = 0;
-
-        bool downDirection = true;
-        for (int i = 0; i < length; i++) {
-            if (currCol >= columns && currRow >= numRows) {
-                cerr << "something wrong" << endl;
-                break;
-            }
-            zigArray[currRow][currCol] = s[i];
-
-            if (currRow == (numRows - 1)) {
-                downDirection = false;
-                currCol += 1;
+            if (currRow == 0 || currRow == (numRows - 1)) {
+                downDirection = !downDirection;
             }
 
-            if (currRow == 0) {
-                downDirection = true;
-            }
-
-            if (currRow == 1 && !downDirection && numRows != 2) {
-                currCol += 1;
-            }
-
-            if (downDirection) {
-                currRow += 1;
-            } else {
-                currRow -= 1;
-            }
+            currRow += downDirection ? 1 : -1;
         }
 
-        string newStr = "";
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (zigArray[i][j] != 0) {
-                    newStr += zigArray[i][j];
-                }
-            }
+        string newStr;
+        for(string s : rows) {
+            newStr += s;
         }
 
         return newStr;
