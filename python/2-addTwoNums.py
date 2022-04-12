@@ -6,59 +6,23 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        ret = ListNode()
-        currNode = ret
+        dummyHead = ListNode()
+        p = l1
+        q = l2
+        curr = dummyHead
         carry = 0
-        while l1 is not None and l2 is not None:
-            sum = l1.val + l2.val + carry
-            currNode.val = sum % 10
+
+        while p or q:
+            v1 = p.val if p else 0
+            v2 = q.val if q else 0
+            sum = v1 + v2 + carry
+            curr.next = ListNode(sum % 10)
+            curr = curr.next
             carry = sum // 10
-            l1 = l1.next
-            l2 = l2.next
+            p = p.next if p else p
+            q = q.next if q else q
 
-            if l1 is None and l2 is None and carry == 1:
-                currNode.next = ListNode()
-                currNode = currNode.next
-                currNode.val = carry
-                return ret
-            elif l1 is None and l2 is None:
-                return ret
-            
-            currNode.next = ListNode()
-            currNode = currNode.next
-
-        while l1 is not None:
-            sum = l1.val + carry
-            currNode.val = sum % 10
-            carry = sum // 10
-            l1 = l1.next
-
-            if l1 is None and carry == 1:
-                currNode.next = ListNode()
-                currNode = currNode.next
-                currNode.val = carry
-                return ret
-            elif l1 is None:
-                return ret
-
-            currNode.next = ListNode()
-            currNode = currNode.next
-
-        while l2 is not None:
-            sum = l2.val + carry
-            currNode.val = sum % 10
-            carry = sum // 10
-            l2 = l2.next
-
-            if l2 is None and carry == 1:
-                currNode.next = ListNode()
-                currNode = currNode.next
-                currNode.val = carry
-                return ret
-            elif l2 is None:
-                return ret
-
-            currNode.next = ListNode()
-            currNode = currNode.next
-
-        return ret
+        if carry == 1:
+            curr.next = ListNode(carry)
+        
+        return dummyHead.next
