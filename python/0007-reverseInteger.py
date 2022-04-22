@@ -2,15 +2,29 @@ class Solution:
     def reverse(self, x: int) -> int:
         ret = 0
         currNum = x if x > 0 else -x
+        maxInt32 = 2 ** 31 - 1
         while currNum != 0:
             ret = ret * 10 + currNum % 10
             currNum //= 10
 
+            if ret < maxInt32:
+                continue
+
+            if ret > maxInt32 // 10:
+                ret = 0
+                break
+
+            if x > 0:
+                if currNum % 10 > maxInt32 % 10:
+                    ret = 0
+                    break
+            else:
+                if currNum % 10 > maxInt32 % 10 + 1:
+                    ret = 0
+                    break
+
         if x < 0:
             ret = -ret
-
-        if ret < -2 ** 31 or ret > 2 ** 31 - 1:
-            ret = 0
 
         return ret
 
