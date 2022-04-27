@@ -1,36 +1,31 @@
 class Solution:
     def myAtoi(self, s: str) -> int:
-        s = s.lstrip(' ')
+        sign = 1
+        result = 0
+        INT_MAX, INT_MIN = 2 ** 31 - 1, -2 ** 31
 
-        if s == '':
-            return 0
-
-        maxInt = 2 ** 31 - 1
-        minInt = -2 ** 31
-
-        isPositiveNum = True
-        if s[0] == '-':
-            isPositiveNum = False
-            s = s[1:]
-        elif s[0] == '+':
-            s = s[1:]
-
-        i = -1
+        i = 0
         for i in range(len(s)):
-            if not s[i].isdigit():
+            if s[i] != ' ':
                 break
-            i += 1
 
-        if s[0:i] == '':
+        s = s[i:]
+
+        if len(s) == 0:
             return 0
 
-        intNum = int(s[0:i])
-        if isPositiveNum and intNum > maxInt:
-            return maxInt
-        elif not isPositiveNum and -intNum < minInt:
-            return minInt
+        if s[0] == '-' or s[0] == '+':
+            sign = -1 if s[0] == '-' else 1
+            s = s[1:]
 
-        return intNum if isPositiveNum else -intNum
+        for c in s:
+            if not c.isdigit():
+                break
+            if result > INT_MAX // 10 or (result == INT_MAX // 10 and int(c) > INT_MAX % 10):
+                return INT_MAX if sign == 1 else INT_MIN
+            result = result * 10 + int(c)
+
+        return sign * result
 
 s = Solution()
 assert s.myAtoi("") == 0
