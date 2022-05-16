@@ -1,2 +1,7 @@
 a.out
 .vscode
+
+*.exe
+*.ilk
+*.obj
+*.pdb
