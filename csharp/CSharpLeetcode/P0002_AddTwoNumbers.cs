@@ -28,8 +28,8 @@ namespace CSharpLeetcode
                 curr.val = (x + y + carry) % 10;
                 carry = (x + y + carry) / 10;
 
-                if (p != null) p = p.next;
-                if (q != null) q = q.next;
+                if (p != null) p = p.next!;
+                if (q != null) q = q.next!;
             }
 
             if (carry == 1)
@@ -39,7 +39,7 @@ namespace CSharpLeetcode
                 curr.val = carry;
             }
 
-            return dummyHead.next;
+            return dummyHead.next!;
         }
     }
 }
