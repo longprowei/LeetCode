@@ -48,7 +48,7 @@ namespace CSharpLeetcodeTest
             Assert.NotNull(actual);
             Assert.Equal(expected.val, actual.val);
             Assert.NotNull(actual.next);
-            Assert.Equal(expected.next.val, actual.next.val);
+            Assert.Equal(expected.next!.val, actual.next.val);
         }
 
         [Fact]
@@ -65,8 +65,8 @@ namespace CSharpLeetcodeTest
             while(actual != null && expected != null)
             {
                 Assert.Equal(expected.val, actual.val);
-                expected = expected.next;
-                actual = actual.next;
+                expected = expected.next!;
+                actual = actual.next!;
             }
             Assert.Null(actual);
             Assert.Null(expected);
@@ -86,8 +86,8 @@ namespace CSharpLeetcodeTest
             while (actual != null && expected != null)
             {
                 Assert.Equal(expected.val, actual.val);
-                expected = expected.next;
-                actual = actual.next;
+                expected = expected.next!;
+                actual = actual.next!;
             }
             Assert.Null(actual);
             Assert.Null(expected);
