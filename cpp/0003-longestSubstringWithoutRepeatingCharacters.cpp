@@ -14,6 +14,7 @@
 #include <set>
 #include <queue>
 #include <cstdio>
+#include <algorithm>
 
 using namespace std;
 
@@ -23,15 +24,13 @@ public:
         map<char, int> m;
         int maxLen = 0;
         int lastRepeatPos = -1;
-        for (int i = 0; i < s.size(); i++) {
-            if (m.find(s[i]) != m.end() && lastRepeatPos < m[s[i]]) {
-                lastRepeatPos = m[s[i]];
+        for (int i = 0, j = 0; j < s.size(); j++) {
+            if (m.find(s[j]) != m.end()) {
+                i = max(i, m[s[j]]);
             }
 
-            if (i - lastRepeatPos > maxLen) {
-                maxLen = i - lastRepeatPos;
-            }
-            m[s[i]] = i;
+            maxLen = max(maxLen, j - i + 1);
+            m[s[j]] = j + 1;
         }
 
         return maxLen;
@@ -42,7 +41,7 @@ int main()
 {
     Solution s;
     string str = "qopubjguxhxdipfzwswybgfylqvjzhar";
-    cout << s.lengthOfLongestSubstring(str) << endl;
+    cout << s.lengthOfLongestSubstring(str) << endl; // should be 12
 
     return 0;
 }
